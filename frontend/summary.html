@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trip Summary - Yatrik</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .summary-box { background: var(--secondary-color); padding: 2rem; border-radius: var(--border-radius); margin-bottom: 2rem; }
+    .summary-box h3 { color: var(--accent-gold); border-bottom: 1px solid var(--tertiary-color); padding-bottom: 0.5rem; margin-bottom: 1rem; }
+    .budget-table { width: 100%; border-collapse: collapse; }
+    .budget-table th, .budget-table td { padding: 0.75rem; border-bottom: 1px solid var(--tertiary-color); text-align: left; }
+    .budget-table .total { font-weight: bold; font-size: 1.1rem; color: var(--accent-gold); }
+    .day-card { background: var(--bg-card); padding: 1.5rem; border-radius: var(--border-radius); margin-bottom: 1rem; border-left: 4px solid var(--accent-gold); }
+    .actions { display: flex; gap: 1rem; margin-top: 2rem; }
+    @media print { .actions { display: none !important; } .summary-box { border: 1px solid #000; background: #fff; color: #000; } }
+  </style>
+</head>
+<body>
+  <script src="js/common.js"></script>
+  <script src="js/summary.js"></script>
+  
+  <main>
+    <div style="text-align:center; margin-bottom:2rem;">
+      <h1 style="color:var(--accent-gold);">YATRIK TRIP SUMMARY</h1>
+      <p id="modeIndicator" class="badge secondary">MODE</p>
+    </div>
+    
+    <div class="summary-box">
+      <h3>Trip Overview</h3>
+      <div class="grid" style="grid-template-columns: 1fr 1fr; gap:1rem;">
+        <div><strong>Destination:</strong> <span id="sDest"></span></div>
+        <div><strong>Travelers:</strong> <span id="sPax"></span></div>
+        <div><strong>Dates:</strong> <span id="sDates"></span></div>
+        <div><strong>Total Days:</strong> <span id="sDays"></span></div>
+      </div>
+    </div>
+    
+    <div id="transportBox" class="summary-box" style="display:none;">
+      <h3>Transportation</h3>
+      <div id="sTransportDetails"></div>
+    </div>
+    
+    <div class="summary-box">
+      <h3>Budget Breakdown</h3>
+      <table class="budget-table" id="budgetTable">
+        <!-- Budget rows inserted here -->
+      </table>
+    </div>
+    
+    <div id="itineraryBox" class="summary-box" style="display:none;">
+      <h3>Daily Itinerary</h3>
+      <div id="sItinerary"></div>
+    </div>
+    
+    <div id="recommendationsBox" class="summary-box" style="display:none;">
+      <h3>Recommendations</h3>
+      <ul id="sRecs" style="margin-left: 2rem;"></ul>
+    </div>
+    
+    <div class="actions no-print">
+      <button class="primary" onclick="saveTrip()">💾 SAVE TRIP</button>
+      <button onclick="window.print()">🖨️ PRINT ITINERARY</button>
+      <button onclick="window.location.href='india.html'">🗺️ PLAN ANOTHER TRIP</button>
+    </div>
+  </main>
+</body>
+</html>

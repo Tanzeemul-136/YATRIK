@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yatrik - Your Journey, Our Expertise</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      min-height: 100vh;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.88), rgba(30, 41, 59, 0.94)),
+                  url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat fixed;
+      font-family: inherit;
+    }
+
+    .auth-wrapper {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .auth-container {
+      background: rgba(30, 41, 59, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius, 14px);
+      padding: 2.5rem 2rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .brand-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-gold, #f59e0b);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .brand-title {
+      color: #f8fafc;
+      font-size: 2.25rem;
+      letter-spacing: 2px;
+      margin: 0 0 0.25rem 0;
+      font-weight: 700;
+    }
+
+    .brand-tagline {
+      color: #94a3b8;
+      font-size: 0.92rem;
+      margin-bottom: 1.75rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* Auth Mode Tabs */
+    .auth-tabs {
+      display: flex;
+      margin-bottom: 1.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(15, 23, 42, 0.4);
+      border-radius: 8px 8px 0 0;
+      overflow: hidden;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 0.75rem;
+      cursor: pointer;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .auth-tab:hover {
+      color: #f8fafc;
+    }
+
+    .auth-tab.active {
+      color: var(--accent-gold, #f59e0b);
+      border-bottom: 2px solid var(--accent-gold, #f59e0b);
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    /* Form Fields & Layout */
+    .auth-form {
+      display: none;
+      text-align: left;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 0.75rem 0.9rem;
+      color: #f8fafc;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .form-group input:focus {
+      border-color: var(--accent-gold, #f59e0b);
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
+
+    .error-msg {
+      color: #f87171;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 6px;
+      padding: 0.65rem 0.75rem;
+      font-size: 0.82rem;
+      margin-bottom: 1.25rem;
+      display: none;
+    }
+
+    .error-msg:not(:empty) {
+      display: block;
+    }
+
+    .auth-submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #0f172a;
+      border: none;
+      border-radius: 8px;
+      padding: 0.85rem;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.25);
+      transition: filter 0.15s ease;
+    }
+
+    .auth-submit-btn:hover {
+      filter: brightness(1.1);
+    }
+
+    .auth-footer-note {
+      margin-top: 1.5rem;
+      font-size: 0.78rem;
+      color: #64748b;
+      letter-spacing: 0.3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-container">
+      <span class="brand-badge">2026 Enterprise Release</span>
+      <h1 class="brand-title">YATRIK</h1>
+      <div class="brand-tagline">Your Journey, Our Expertise</div>
+      
+      <!-- Nav Tabs -->
+      <div class="auth-tabs" role="tablist">
+        <div class="auth-tab active" role="tab" onclick="switchTab('login')">Account Login</div>
+        <div class="auth-tab" role="tab" onclick="switchTab('signup')">New Registration</div>
+      </div>
+      
+      <!-- Login Form -->
+      <form id="loginForm" class="auth-form active">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" placeholder="e.g., Tanzemul033@gmail.com" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        </div>
+        <div id="loginError" class="error-msg"></div>
+        <button type="submit" class="auth-submit-btn">Enter Travel Matrix</button>
+      </form>
+      
+      <!-- Sign Up Form -->
+      <form id="signupForm" class="auth-form">
+        <div class="form-group">
+          <label for="signupName">Full Legal Name</label>
+          <input type="text" id="signupName" placeholder="e.g., Tanzeemul Haq" required>
+        </div>
+        <div class="form-group">
+          <label for="signupDisplayName">Display Name</label>
+          <input type="text" id="signupDisplayName" placeholder="e.g., Tanzee">
+        </div>
+        <div class="form-group">
+          <label for="signupEmail">Email Address</label>
+          <input type="email" id="signupEmail" placeholder="e.g., Tanzemul033@gmail.com" required>
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">Create Password</label>
+          <input type="password" id="signupPassword" placeholder="Minimum 6 characters" required minlength="6">
+        </div>
+        <div class="form-group">
+          <label for="signupConfirmPassword">Confirm Password</label>
+          <input type="password" id="signupConfirmPassword" placeholder="Re-enter password" required minlength="6">
+        </div>
+        <div id="signupError" class="error-msg"></div>
+        <button type="submit" class="auth-submit-btn">Register & Launch</button>
+      </form>
+
+      <div class="auth-footer-note">
+        India Operational Core • Secure Local Session Persistence
+      </div>
+    </div>
+  </div>
+  
+  <script src="js/common.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

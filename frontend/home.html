@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yatrik - Global Travel Matrix</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .home-container {
+      max-width: 1200px;
+      margin: 1.5rem auto 4rem auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Welcome Hero Banner */
+    .welcome-banner {
+      position: relative;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.94), rgba(30, 41, 59, 0.88)),
+                  url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+      border: 1px solid rgba(255, 215, 0, 0.25);
+      border-radius: var(--border-radius, 14px);
+      padding: 3rem 2rem;
+      text-align: center;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+      margin-bottom: 2.5rem;
+    }
+
+    .welcome-banner h1 {
+      font-size: 2.4rem;
+      color: #f8fafc;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: 0.5px;
+    }
+
+    .welcome-banner p {
+      color: #cbd5e1;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .matrix-title {
+      text-align: center;
+      color: var(--accent-gold, #f59e0b);
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .matrix-subtitle {
+      text-align: center;
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    /* Matrix Grid Layout */
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .region-card {
+      position: relative;
+      height: 240px;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.5rem;
+      cursor: pointer;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+      transition: border-color 0.15s ease, transform 0.15s ease;
+      background-size: cover;
+      background-position: center;
+      text-align: left;
+    }
+
+    .region-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.2) 0%, rgba(15, 23, 42, 0.92) 80%);
+      z-index: 1;
+    }
+
+    .region-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .region-card h3 {
+      font-size: 1.3rem;
+      color: #f8fafc;
+      margin: 0 0 0.35rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .region-card p {
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: #cbd5e1;
+      margin: 0 0 0.85rem 0;
+    }
+
+    /* Active Node: India */
+    .region-card.active {
+      border: 2px solid var(--accent-gold, #f59e0b);
+      box-shadow: 0 8px 28px rgba(245, 158, 11, 0.25);
+    }
+
+    .region-card.active:hover {
+      transform: translateY(-3px);
+      border-color: #fbbf24;
+    }
+
+    /* Disabled Coming Soon Nodes */
+    .region-card.disabled {
+      filter: grayscale(0.55) opacity(0.85);
+      border-color: rgba(255, 255, 255, 0.08);
+      cursor: not-allowed;
+    }
+
+    .region-card.disabled:hover {
+      filter: grayscale(0.2) opacity(1);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* Node Status Badges */
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 12px;
+    }
+
+    .badge.success {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+    }
+
+    .badge.secondary {
+      background: rgba(148, 163, 184, 0.15);
+      color: #94a3b8;
+      border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    /* Transport Logistics Section */
+    .transport-preview-section {
+      background: var(--secondary-color, #1e293b);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .transport-preview-section h3 {
+      font-size: 1.15rem;
+      color: #f8fafc;
+      margin: 0 0 0.5rem 0;
+      letter-spacing: 0.5px;
+    }
+
+    .transport-preview-section p {
+      font-size: 0.88rem;
+      color: #94a3b8;
+      margin: 0 0 1.25rem 0;
+    }
+
+    .transport-modes-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .mode-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.35rem;
+      color: #cbd5e1;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .mode-item span.icon {
+      font-size: 2rem;
+    }
+
+    /* Toast Notification for Disabled Regions */
+    #comingSoonNotice {
+      display: none;
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid var(--accent-gold, #f59e0b);
+      color: #f8fafc;
+      padding: 0.85rem 1.75rem;
+      border-radius: 30px;
+      font-size: 0.92rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <script src="js/common.js"></script>
+  <script src="js/home.js"></script>
+  
+  <main class="home-container">
+    <section class="welcome-banner">
+      <h1 id="welcomeText">Welcome to Yatrik!</h1>
+      <p>Select an active operational region below to launch travel parameter planning.</p>
+    </section>
+    
+    <header>
+      <h2 class="matrix-title">GLOBAL TRAVEL MATRIX 🌍</h2>
+      <p class="matrix-subtitle">India is currently the sole active operational node. Additional global regions are in rollout.</p>
+    </header>
+
+    <div class="matrix-grid" id="regionGrid">
+      <!-- India: Active Node -->
+      <div class="region-card active" style="background-image: url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=800&q=80');" onclick="window.location.href='india.html'">
+        <div class="region-content">
+          <h3>🇮🇳 INDIA</h3>
+          <p>Curated destination network across 23 nodes with authentic guides, local cuisines, and transit inventory.</p>
+          <span class="badge success">ACTIVE REGION</span>
+        </div>
+      </div>
+      
+      <!-- Europe: Coming Soon -->
+      <div class="region-card disabled" style="background-image: url('https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=800&q=80');" onclick="showComingSoon('Europe')">
+        <div class="region-content">
+          <h3>🇪🇺 EUROPE</h3>
+          <p>Alpine transit networks, historic centers, and continental rail systems.</p>
+          <span class="badge secondary">COMING SOON</span>
+        </div>
+      </div>
+      
+      <!-- East Asia: Coming Soon -->
+      <div class="region-card disabled" style="background-image: url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=800&q=80');" onclick="showComingSoon('East Asia')">
+        <div class="region-content">
+          <h3>⛩️ EAST ASIA</h3>
+          <p>High-speed corridor logistics, culinary heritage, and metropolitan matrices.</p>
+          <span class="badge secondary">COMING SOON</span>
+        </div>
+      </div>
+      
+      <!-- Americas: Coming Soon -->
+      <div class="region-card disabled" style="background-image: url('https://images.unsplash.com/photo-1485738422979-f5c462d49f74?auto=format&fit=crop&w=800&q=80');" onclick="showComingSoon('Americas')">
+        <div class="region-content">
+          <h3>🌎 AMERICAS</h3>
+          <p>Continental interstate systems, diverse biomes, and coastal corridors.</p>
+          <span class="badge secondary">COMING SOON</span>
+        </div>
+      </div>
+      
+      <!-- Middle East: Coming Soon -->
+      <div class="region-card disabled" style="background-image: url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80');" onclick="showComingSoon('Middle East')">
+        <div class="region-content">
+          <h3>🐪 MIDDLE EAST</h3>
+          <p>Trans-desert transit hubs, historic trading crossroads, and urban centers.</p>
+          <span class="badge secondary">COMING SOON</span>
+        </div>
+      </div>
+      
+      <!-- Africa: Coming Soon -->
+      <div class="region-card disabled" style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=800&q=80');" onclick="showComingSoon('Africa')">
+        <div class="region-content">
+          <h3>🦁 AFRICA</h3>
+          <p>Ecological expedition routes, savanna journeys, and historic river trade.</p>
+          <span class="badge secondary">COMING SOON</span>
+        </div>
+      </div>
+      
+      <!-- Australia / Oceania: Coming Soon -->
+      <div class="region-card disabled" style="background-image: url('https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?auto=format&fit=crop&w=800&q=80');" onclick="showComingSoon('Australia/Oceania')">
+        <div class="region-content">
+          <h3>🦘 AUSTRALIA / OCEANIA</h3>
+          <p>Coastal marine passages, outback routes, and island itineraries.</p>
+          <span class="badge secondary">COMING SOON</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Unified Transport Engine Badges -->
+    <section class="transport-preview-section">
+      <h3>Unified Multi-Modal Transit Engine</h3>
+      <p>Instantaneous routing and inventory estimates across all operational corridors.</p>
+      <div class="transport-modes-row">
+        <div class="mode-item"><span class="icon">✈️</span><span>Commercial Flights</span></div>
+        <div class="mode-item"><span class="icon">🚂</span><span>Express & High-Speed Rail</span></div>
+        <div class="mode-item"><span class="icon">🚌</span><span>Intercity Volvo / Sleeper</span></div>
+        <div class="mode-item"><span class="icon">🚕</span><span>Outstation Cab Services</span></div>
+      </div>
+    </section>
+
+    <!-- Toast Notification Element for Disabled Nodes -->
+    <div id="comingSoonNotice"></div>
+  </main>
+  
+  <footer>
+    <p>&copy; 2026 Yatrik Travel Logistics Engine • India Operational Node</p>
+  </footer>
+</body>
+</html>

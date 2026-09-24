@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>Destination Discovery - Yatrik</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .dest-container {
+      max-width: 1200px;
+      margin: 1.5rem auto 4rem auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Destination Hero Card */
+    .dest-hero {
+      position: relative;
+      background: linear-gradient(180deg, rgba(15, 23, 42, 0.75) 0%, rgba(15, 23, 42, 0.95) 100%),
+                  url('https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius, 16px);
+      padding: 3.5rem 2rem 2.5rem 2rem;
+      text-align: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .fav-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: #94a3b8;
+      transition: background 0.15s, transform 0.15s;
+    }
+
+    .fav-btn:hover {
+      background: rgba(15, 23, 42, 0.9);
+      transform: scale(1.05);
+    }
+
+    .fav-btn.active {
+      color: #ef4444;
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+
+    .node-tag {
+      display: inline-block;
+      font-size: 0.8rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-gold, #f59e0b);
+      border: 1px solid rgba(245, 158, 11, 0.35);
+      padding: 0.3rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 0.85rem;
+      font-weight: 600;
+    }
+
+    .dest-hero h1 {
+      font-size: 2.75rem;
+      color: #f8fafc;
+      margin: 0 0 0.35rem 0;
+      letter-spacing: 0.5px;
+    }
+
+    .dest-state-pill {
+      font-size: 1.05rem;
+      color: var(--accent-gold, #f59e0b);
+      font-weight: 500;
+      margin-bottom: 1.25rem;
+    }
+
+    .dest-description {
+      font-size: 1.1rem;
+      line-height: 1.75;
+      color: #e2e8f0;
+      max-width: 820px;
+      margin: 0 auto 2rem auto;
+    }
+
+    /* Meta Stat Tiles */
+    .dest-meta-grid {
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      margin-bottom: 2.25rem;
+      flex-wrap: wrap;
+    }
+
+    .meta-chip {
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.65rem 1.25rem;
+      border-radius: 30px;
+      font-size: 0.92rem;
+      color: #cbd5e1;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .meta-chip strong {
+      color: #f8fafc;
+    }
+
+    .plan-trip-cta {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #0f172a;
+      font-weight: 700;
+      font-size: 1.15rem;
+      padding: 0.95rem 2.8rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: filter 0.15s ease;
+    }
+
+    .plan-trip-cta:hover {
+      filter: brightness(1.1);
+    }
+
+    /* Tabs Navigation */
+    .tabs-wrapper {
+      display: flex;
+      gap: 0.75rem;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 1.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .tab-btn {
+      background: var(--secondary-color, #1e293b);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 0.85rem 1.6rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .tab-btn:hover {
+      color: #f8fafc;
+      background: var(--tertiary-color, #334155);
+    }
+
+    .tab-btn.active {
+      background: var(--accent-gold, #f59e0b);
+      color: #0f172a;
+      border-color: var(--accent-gold, #f59e0b);
+      font-weight: 700;
+    }
+
+    /* Filter & Search Bar */
+    .filter-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: var(--secondary-color, #1e293b);
+      padding: 0.85rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    @media (max-width: 650px) {
+      .filter-bar {
+        flex-direction: column;
+      }
+    }
+
+    .filter-bar input,
+    .filter-bar select {
+      background: var(--bg-dark, #0f172a);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 6px;
+      padding: 0.7rem 0.9rem;
+      color: #f8fafc;
+      font-size: 0.92rem;
+      outline: none;
+    }
+
+    .filter-bar input {
+      flex: 2;
+    }
+
+    .filter-bar select {
+      flex: 1;
+    }
+
+    .filter-bar input:focus,
+    .filter-bar select:focus {
+      border-color: var(--accent-gold, #f59e0b);
+    }
+
+    /* Discovery Grids */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .item-card {
+      background: var(--secondary-color, #1e293b);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .item-card-media {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #0f172a;
+    }
+
+    .item-card-body {
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .item-card h4 {
+      color: #f8fafc;
+      font-size: 1.15rem;
+      margin: 0 0 0.35rem 0;
+    }
+
+    .item-meta {
+      font-size: 0.82rem;
+      color: var(--accent-gold, #f59e0b);
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .item-card p {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin: 0 0 1rem 0;
+      flex-grow: 1;
+    }
+
+    .item-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.88rem;
+    }
+
+    .item-price {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    /* Simple Loading & Fallback */
+    #loadingArea {
+      padding: 4rem 1rem;
+      text-align: center;
+      color: #94a3b8;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+  <script src="js/common.js"></script>
+  <script src="js/destination.js"></script>
+  
+  <main class="dest-container">
+    <div id="loadingArea">Loading curated destination intelligence...</div>
+    
+    <div id="contentArea" style="display:none;">
+      <!-- Hero Section with Dynamic Background & Fav Button -->
+      <section class="dest-hero" id="destHeroBanner">
+        <button id="destFavBtn" class="fav-btn" title="Toggle Favorite">🤍</button>
+        <span class="node-tag">Active Operational Node • India</span>
+        <h1 id="destName"></h1>
+        <div id="destState" class="dest-state-pill"></div>
+        <p id="destDesc" class="dest-description"></p>
+        
+        <div class="dest-meta-grid">
+          <div class="meta-chip"><span>🗓️ Best Time:</span> <strong id="destBestTime"></strong></div>
+          <div class="meta-chip"><span>⏱️ Duration:</span> <strong id="destDays"></strong></div>
+          <div class="meta-chip"><span>💰 Est. Daily:</span> <strong id="destBudget"></strong></div>
+        </div>
+
+        <div>
+          <button class="plan-trip-cta" onclick="planTrip()">
+            <span>🗺️</span>
+            <span>Plan a Trip Here</span>
+          </button>
+        </div>
+      </section>
+      
+      <!-- Section Tabs: Instant Switching, Zero Animations -->
+      <nav class="tabs-wrapper" aria-label="Destination Sections">
+        <button class="tab-btn active" onclick="switchTab('places')">🏛️ FAMOUS PLACES</button>
+        <button class="tab-btn" onclick="switchTab('food')">🍽️ FAMOUS FOOD</button>
+        <button class="tab-btn" onclick="switchTab('restaurants')">🍴 ICONIC RESTAURANTS</button>
+        <button class="tab-btn" onclick="switchTab('souvenirs')">🎁 LOCAL SOUVENIRS</button>
+      </nav>
+      
+      <!-- Filter and Real-Time Search -->
+      <div class="filter-bar">
+        <input type="text" id="tabSearch" placeholder="Search attractions, cuisine, places, or craft...">
+        <select id="tabFilter">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+      
+      <!-- Tab Content Grids (Populated via destination.js from MySQL) -->
+      <div id="placesTab" class="tab-content active grid"></div>
+      <div id="foodTab" class="tab-content grid"></div>
+      <div id="restaurantsTab" class="tab-content grid"></div>
+      <div id="souvenirsTab" class="tab-content grid"></div>
+    </div>
+  </main>
+  
+  <footer>
+    <p>&copy; 2026 Yatrik Travel Logistics Engine • India Core Deployment</p>
+  </footer>
+</body>
+</html>

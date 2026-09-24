@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - Yatrik</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .about-card { background: var(--secondary-color); padding: 3rem; border-radius: var(--border-radius); max-width: 800px; margin: 0 auto; text-align: center; }
+    .about-card h1 { color: var(--accent-gold); margin-bottom: 0.5rem; }
+    .tech-stack { display: flex; justify-content: center; gap: 1rem; margin-top: 2rem; flex-wrap: wrap; }
+    .tech-badge { background: var(--tertiary-color); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <script src="js/common.js"></script>
+  <script src="js/about.js"></script>
+  
+  <main>
+    <div class="about-card">
+      <h1>YATRIK PLATFORM</h1>
+      <p class="text-muted" style="margin-bottom: 2rem;">Build: 2026 Enterprise Release</p>
+      
+      <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+        Yatrik is a next-generation travel platform designed to simplify itinerary planning and cultural discovery. 
+        Whether you prefer manual curation or AI-assisted scheduling, Yatrik provides an integrated, seamless experience 
+        for travelers exploring the wonders of India and beyond.
+      </p>
+      
+      <div style="background: var(--bg-dark); padding: 1.5rem; border-radius: var(--border-radius); text-align: left; margin-bottom: 2rem;">
+        <h3 style="color: var(--accent-gold); border-bottom: 1px solid var(--tertiary-color); padding-bottom: 0.5rem;">Leadership & Contact</h3>
+        <p><strong>Lead Architect:</strong> Tanzeemul Haq</p>
+        <p><strong>Contact:</strong> +91 955-512-6761</p>
+        <p><strong>Email:</strong> Tanzemul033@gmail.com</p>
+      </div>
+      
+      <h3 style="color: var(--accent-gold);">Technology Stack</h3>
+      <div class="tech-stack">
+        <span class="tech-badge">Vanilla HTML5/CSS3</span>
+        <span class="tech-badge">Vanilla JavaScript (ES6+)</span>
+        <span class="tech-badge">Fetch API</span>
+        <span class="tech-badge">Python Flask (Backend)</span>
+        <span class="tech-badge">SQLite</span>
+        <span class="tech-badge">Gemini AI Integration</span>
+      </div>
+      
+      <button class="primary" style="margin-top: 3rem;" onclick="window.location.href='home.html'">Return to Home</button>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configure Trip - Yatrik</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .config-container { max-width: 800px; margin: 0 auto; background: var(--secondary-color); padding: 2rem; border-radius: var(--border-radius); }
+    .config-header { text-align: center; margin-bottom: 2rem; }
+    .config-header h2 { color: var(--accent-gold); }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
+    .action-buttons { display: flex; gap: 1.5rem; margin-top: 3rem; }
+    .action-btn { flex: 1; padding: 2rem 1rem; font-size: 1.2rem; text-align: center; border-radius: var(--border-radius); cursor: pointer; transition: transform 0.2s; border: 2px solid transparent; }
+    .action-btn:hover { transform: translateY(-5px); }
+    .action-btn.manual { background: var(--tertiary-color); }
+    .action-btn.manual:hover { border-color: var(--text-main); }
+    .action-btn.ai { background: linear-gradient(135deg, var(--accent-gold), var(--accent-red)); color: var(--primary-color); }
+    .action-btn.ai:hover { box-shadow: 0 0 15px var(--accent-gold); }
+    .action-btn h3 { margin-bottom: 0.5rem; }
+    .action-btn p { font-size: 0.9rem; font-weight: normal; margin: 0; }
+  </style>
+</head>
+<body>
+  <script src="js/common.js"></script>
+  <script src="js/configure.js"></script>
+  
+  <main>
+    <div class="config-container">
+      <div class="config-header">
+        <h2>Trip Configuration</h2>
+        <p>Planning your journey to <strong id="destNameDisplay">...</strong></p>
+      </div>
+      
+      <form id="configForm">
+        <div class="grid-2">
+          <div class="form-group" style="grid-column: 1 / -1">
+            <label>Destination</label>
+            <input type="text" id="destInput" readonly>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1">
+            <label>Starting Location (City/State)</label>
+            <input type="text" id="startLoc" required>
+          </div>
+          <div class="form-group">
+            <label>Start Date</label>
+            <input type="date" id="startDate" required>
+          </div>
+          <div class="form-group">
+            <label>End Date</label>
+            <input type="date" id="endDate" required>
+          </div>
+          <div class="form-group">
+            <label>Number of Days</label>
+            <input type="number" id="numDays" readonly style="background: var(--bg-dark); opacity: 0.8;">
+          </div>
+          <div class="form-group">
+            <label>Number of Travelers</label>
+            <input type="number" id="numTravelers" min="1" value="1" required>
+          </div>
+          <div class="form-group">
+            <label>Total Budget (₹)</label>
+            <input type="number" id="totalBudget" min="1000" step="500" required>
+          </div>
+          <div class="form-group">
+            <label>Preferred Travel Mode</label>
+            <select id="travelMode">
+              <option value="Any">Any</option>
+              <option value="Flight">Flight</option>
+              <option value="Train">Train</option>
+              <option value="Bus">Bus</option>
+              <option value="Cab">Cab</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Accommodation Preference</label>
+            <select id="accPref">
+              <option value="Budget">Budget</option>
+              <option value="Standard" selected>Standard</option>
+              <option value="Premium">Premium</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Food Preference</label>
+            <select id="foodPref">
+              <option value="Any">Any</option>
+              <option value="Vegetarian">Vegetarian</option>
+              <option value="Non-Vegetarian">Non-Vegetarian</option>
+              <option value="Vegan">Vegan</option>
+            </select>
+          </div>
+          <div class="form-group" style="grid-column: 1 / -1">
+            <label>Trip Style</label>
+            <select id="tripStyle">
+              <option value="Balanced">Balanced</option>
+              <option value="Budget">Budget Backpacker</option>
+              <option value="Comfort">Comfort & Luxury</option>
+              <option value="Family">Family Friendly</option>
+              <option value="Couple">Couple / Romantic</option>
+              <option value="Adventure">Adventure</option>
+              <option value="Cultural">Cultural Immersion</option>
+              <option value="Relaxed">Relaxed Pace</option>
+            </select>
+          </div>
+        </div>
+        
+        <div id="formError" class="error-msg" style="margin-top: 1rem;"></div>
+        
+        <div class="action-buttons">
+          <button type="button" class="action-btn manual" onclick="submitForm('manual')">
+            <h3>🗺️ MANUAL PLANNING</h3>
+            <p>Choose your own transport, explore places and food at your pace</p>
+          </button>
+          <button type="button" class="action-btn ai" onclick="submitForm('ai')">
+            <h3>🤖 AI PLANNING</h3>
+            <p>Let Yatrik AI create a personalized itinerary within your budget</p>
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+</body>
+</html>
